@@ -4,9 +4,9 @@ import os
 class NicegrafShadercConan(ConanFile):
     name = "nicegraf-shaderc"
     short_paths = False  #windows MAX_PATH(260) limitation fix
-    version = "0.9.1"
+    version = "0.9.2"
     license = "MIT"
-    author = "<Bagrat Dabaghyan> <dbagrat@gmail.com>"
+    author = "Bagrat Dabaghyan (dbagrat@gmail.com)"
     url = "https://github.com/dBagrat/conan-nicegraf-shaderc.git"
     homepage = "https://github.com/nicebyte/nicegraf-shaderc"
     description = "nicegraf-shaderc is a command-line tool that transforms HLSL code into shaders for various graphics APIs"
@@ -20,7 +20,7 @@ class NicegrafShadercConan(ConanFile):
     def source(self):
         git = tools.Git()
         git.clone("https://github.com/nicebyte/nicegraf-shaderc.git", "master", shallow=True)
-        git.checkout("d7cb0c3a21ddc35879a8068a3b602661f8d0689b")
+        git.checkout("1e71daf5558598e2e6d141fc63421ea7d9453d99")
 
     def configure(self):
         del self.settings.compiler.runtime
@@ -36,14 +36,31 @@ class NicegrafShadercConan(ConanFile):
         del self.info.settings.arch
 
     def package(self):
-        if self.settings.os_build == "Windows":
-            self.copy("nicegraf_shaderc.exe", dst="bin", keep_path=False)
-            self.copy("*.dll", dst="bin", keep_path=False)
-        else:
-            self.copy("nicegraf_shaderc", dst="bin", keep_path=False)
-            self.copy("*.dylib", dst="bin", keep_path=False)
+        os = str(self.settings.os_build)
+        try:
+            settings = {
+                "Windows": {
+                    "ext": ".exe",
+                    "libext": "dll"
+                },
+                "Macos": {
+                    "libext": "dylib"
+                },
+                "Linux": {
+                    "libext": "so"
+                }
+            }[os]
+
+        except KeyError:
+            self.output.error("Unsupported platform: {}".format(os))
+
+        for pattern in [
+            "nicegraf_shaderc{}".format(settings.get("ext", "")),
+            "*.{}".format(settings["libext"])
+        ]:
+            self.copy(pattern, dst="bin", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.bindirs = ['bin']
+        self.cpp_info.bindirs = ["bin"]
         self.env_info.path.append(os.path.join(self.package_folder, "bin"))
 
