@@ -1,1 +1,0 @@
-conan upload "nicegraf-shaderc" -r dbagrat --all
