@@ -4,7 +4,7 @@ import os
 class NicegrafShadercConan(ConanFile):
     name = "nicegraf-shaderc"
     short_paths = False  #windows MAX_PATH(260) limitation fix
-    version = "0.9.3"
+    version = "0.9.4"
     license = "MIT"
     author = "Bagrat Dabaghyan (dbagrat@gmail.com)"
     url = "https://github.com/dBagrat/conan-nicegraf-shaderc.git"
@@ -20,7 +20,7 @@ class NicegrafShadercConan(ConanFile):
     def source(self):
         git = tools.Git()
         git.clone("https://github.com/nicebyte/nicegraf-shaderc.git", "master", shallow=True)
-        git.checkout("92251f26bf42d25cb2957a0fe662dcb3a73fe718")
+        git.checkout("0af3c40599bf4525c5939c350019a6c64fcf2714")
 
     def configure(self):
         del self.settings.compiler.runtime
