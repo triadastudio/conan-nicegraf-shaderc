@@ -4,7 +4,7 @@ import os
 class NicegrafShadercConan(ConanFile):
     name = "nicegraf-shaderc"
     short_paths = False  #windows MAX_PATH(260) limitation fix
-    version = "0.9.3"
+    version = "0.9.3b"
     license = "MIT"
     author = "Bagrat Dabaghyan (dbagrat@gmail.com)"
     url = "https://github.com/dBagrat/conan-nicegraf-shaderc.git"
