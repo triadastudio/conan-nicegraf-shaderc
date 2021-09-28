@@ -3,24 +3,26 @@ import os
 
 class NicegrafShadercConan(ConanFile):
     name = "nicegraf-shaderc"
-    short_paths = False  #windows MAX_PATH(260) limitation fix
-    version = "0.9.5"
+    version = "0.9.6"
     license = "MIT"
-    author = "Bagrat Dabaghyan (dbagrat@gmail.com)"
-    url = "https://github.com/dBagrat/conan-nicegraf-shaderc.git"
+    url = "https://github.com/triadastudio/conan-nicegraf-shaderc.git"
     homepage = "https://github.com/nicebyte/nicegraf-shaderc"
     description = "nicegraf-shaderc is a command-line tool that transforms HLSL code into shaders for various graphics APIs"
-    topics = ("shader compiler", "hlsl", "glsl", "metal")
+    topics = ("shader compiler", "hlsl", "glsl", "spirv", "metal")
     settings = "os_build", "arch_build", "arch", "compiler"
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
     no_copy_source = True
 
+    @property
+    def _source_commit(self):
+        return "1209d53178538c2063501c51a862e4666a2954d3"
+    
     def source(self):
-        git = tools.Git()
-        git.clone("https://github.com/nicebyte/nicegraf-shaderc.git", "master", shallow=True)
-        git.checkout("9744681974d06b4de017094933e8f713f2b4ca86")
+        tools.get(url="https://github.com/nicebyte/nicegraf-shaderc/archive/{}.zip"
+                  .format(self._source_commit),
+                  strip_root=True)
 
     def configure(self):
         del self.settings.compiler.runtime
@@ -63,4 +65,3 @@ class NicegrafShadercConan(ConanFile):
     def package_info(self):
         self.cpp_info.bindirs = ["bin"]
         self.env_info.path.append(os.path.join(self.package_folder, "bin"))
-
