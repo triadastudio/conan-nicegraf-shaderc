@@ -1,13 +1,13 @@
 from conans import ConanFile, tools
 import os
 
-class NicegrafShadercTestConan(ConanFile):
+class NiceshadeTestConan(ConanFile):
     settings = "os_build", "arch_build"
 
     def imports(self):
-        self.copy("nicegraf_shaderc*", dst="bin", src="bin")
+        self.copy("niceshade*", dst="bin", src="bin")
 
     def test(self):
         if not tools.cross_building(self.settings):
             os.chdir("bin")
-            self.run("nicegraf_shaderc")
+            self.run("niceshade")
