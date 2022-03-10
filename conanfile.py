@@ -1,13 +1,13 @@
 from conans import ConanFile, CMake, tools
 import os
 
-class NicegrafShadercConan(ConanFile):
-    name = "nicegraf-shaderc"
-    version = "0.9.6"
+class NiceshadeConan(ConanFile):
+    name = "niceshade"
+    version = "1.0"
     license = "MIT"
-    url = "https://github.com/triadastudio/conan-nicegraf-shaderc.git"
-    homepage = "https://github.com/nicebyte/nicegraf-shaderc"
-    description = "nicegraf-shaderc is a command-line tool that transforms HLSL code into shaders for various graphics APIs"
+    url = "https://github.com/triadastudio/conan-niceshade.git"
+    homepage = "https://github.com/nicebyte/niceshade"
+    description = "niceshade is a library and a command-line tool that transforms HLSL code into shaders for various graphics APIs"
     topics = ("shader compiler", "hlsl", "glsl", "spirv", "metal")
     settings = "os_build", "arch_build", "arch", "compiler"
     options = {"shared": [True, False]}
@@ -17,10 +17,10 @@ class NicegrafShadercConan(ConanFile):
 
     @property
     def _source_commit(self):
-        return "1209d53178538c2063501c51a862e4666a2954d3"
+        return "1ded4b2f12d6f1b3d339137ce04d53e249b68db9"
     
     def source(self):
-        tools.get(url="https://github.com/nicebyte/nicegraf-shaderc/archive/{}.zip"
+        tools.get(url="https://github.com/nicebyte/niceshade/archive/{}.zip"
                   .format(self._source_commit),
                   strip_root=True)
 
@@ -30,7 +30,7 @@ class NicegrafShadercConan(ConanFile):
     def build(self):
         cmake = CMake(self, build_type = "Release")
         cmake.configure()
-        cmake.build(target = "nicegraf_shaderc")
+        cmake.build(target = "niceshade")
 
     def package_id(self):
         self.info.include_build_settings()
@@ -57,7 +57,7 @@ class NicegrafShadercConan(ConanFile):
             self.output.error("Unsupported platform: {}".format(os))
 
         for pattern in [
-            "nicegraf_shaderc{}".format(settings.get("ext", "")),
+            "niceshade{}".format(settings.get("ext", "")),
             "*.{}".format(settings["libext"])
         ]:
             self.copy(pattern, dst="bin", keep_path=False)
