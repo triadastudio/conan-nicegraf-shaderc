@@ -3,7 +3,7 @@ import os
 
 class NiceshadeConan(ConanFile):
     name = "niceshade"
-    version = "1.0"
+    version = "1.1"
     license = "MIT"
     url = "https://github.com/triadastudio/conan-niceshade.git"
     homepage = "https://github.com/nicebyte/niceshade"
@@ -17,7 +17,7 @@ class NiceshadeConan(ConanFile):
 
     @property
     def _source_commit(self):
-        return "1ded4b2f12d6f1b3d339137ce04d53e249b68db9"
+        return "875fb4e9f3a9df37ff866b7288859575ce7d862b"
     
     def source(self):
         tools.get(url="https://github.com/nicebyte/niceshade/archive/{}.zip"
