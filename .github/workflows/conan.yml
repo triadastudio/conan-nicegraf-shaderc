@@ -63,7 +63,7 @@ jobs:
       with:
         submodules: 'recursive'
     - name: Install dependencies
-      run: pip3 install conan
+      run: brew install conan
     - name: Config
       env:
         CONAN_LOGIN_USERNAME: ${{ secrets.JFROG_USER }}
