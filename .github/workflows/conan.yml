@@ -8,7 +8,7 @@ on:
 
 jobs:
   windows:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
     - name: Set git to use LF
       run: |
@@ -25,15 +25,14 @@ jobs:
       run: pip install conan
     - name: Config
       env:
-        CONAN_LOGIN_USERNAME: ${{ secrets.JFROG_USER }}
         CONAN_PASSWORD: ${{ secrets.JFROG_APIKEY }}
       run: |
         conan remote add triada https://triada.jfrog.io/artifactory/api/conan/conan
-        conan user -r triada -p --skip-auth
+        conan remote login triada ${{ secrets.JFROG_USER }}
     - name: Build
-      run: conan create .
+      run: conan create . -pr:h profiles/windows.profile -pr:b profiles/windows.profile -s build_type=Release
     - name: Upload
-      run: conan upload "niceshade" -r triada --all -c
+      run: conan upload "niceshade" -r triada -c
 
   linux:
     runs-on: ubuntu-latest
@@ -46,15 +45,14 @@ jobs:
         sudo pip install conan
     - name: Config
       env:
-        CONAN_LOGIN_USERNAME: ${{ secrets.JFROG_USER }}
         CONAN_PASSWORD: ${{ secrets.JFROG_APIKEY }}
       run: |
         conan remote add triada https://triada.jfrog.io/artifactory/api/conan/conan
-        conan user -r triada -p --skip-auth
+        conan remote login triada ${{ secrets.JFROG_USER }}
     - name: Build
-      run: conan create .
+      run: conan create . -pr:h profiles/linux.profile -pr:b profiles/linux.profile -s build_type=Release
     - name: Upload
-      run: conan upload "niceshade" -r triada --all -c
+      run: conan upload "niceshade" -r triada -c
 
   macos:
     runs-on: macos-11
@@ -63,15 +61,14 @@ jobs:
       with:
         submodules: 'recursive'
     - name: Install dependencies
-      run: brew install conan
+      run: pip3 install conan
     - name: Config
       env:
-        CONAN_LOGIN_USERNAME: ${{ secrets.JFROG_USER }}
         CONAN_PASSWORD: ${{ secrets.JFROG_APIKEY }}
       run: |
         conan remote add triada https://triada.jfrog.io/artifactory/api/conan/conan
-        conan user -r triada -p --skip-auth
+        conan remote login triada ${{ secrets.JFROG_USER }}
     - name: Build
-      run: conan create .
+      run: conan create . -pr:h profiles/macos.profile -pr:b profiles/macos.profile -s build_type=Release
     - name: Upload
-      run: conan upload "niceshade" -r triada --all -c
+      run: conan upload "niceshade" -r triada -c
