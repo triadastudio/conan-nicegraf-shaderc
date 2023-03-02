@@ -20,10 +20,6 @@ class NiceshadeConan(ConanFile):
     def _source_commit(self):
         return "2b6feea686beb05dffd3ba2e2705896bfc6e9bd2"
 
-    @property
-    def _settings_build(self):
-        return getattr(self, "settings_build", self.settings)
-
     def configure(self):
         self.settings.rm_safe("compiler.cppstd")
         self.settings.rm_safe("compiler.libcxx")
@@ -43,13 +39,11 @@ class NiceshadeConan(ConanFile):
         cm.build(target = "niceshade")
 
     def package_id(self):
-        del self.info.settings.os
-        del self.info.settings.arch
         del self.info.settings.compiler
         del self.info.settings.build_type
 
     def package(self):
-        os_str = str(self._settings_build.os)
+        os_str = str(self.settings.os)
         try:
             settings = {
                 "Windows": {
