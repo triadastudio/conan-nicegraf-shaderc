@@ -5,7 +5,7 @@ import os
 
 class NiceshadeConan(ConanFile):
     name = "niceshade"
-    version = "1.3"
+    version = "1.4"
     license = "MIT"
     url = "https://github.com/triadastudio/conan-niceshade.git"
     homepage = "https://github.com/nicebyte/niceshade"
@@ -18,7 +18,7 @@ class NiceshadeConan(ConanFile):
 
     @property
     def _source_commit(self):
-        return "aea9d4b1b2f31d4362035f2a35f07d6d4e4bb411"
+        return "c86b69a79879ead75328eb7a18c5316f3d1f9119"
 
     def configure(self):
         self.settings.rm_safe("compiler.cppstd")
