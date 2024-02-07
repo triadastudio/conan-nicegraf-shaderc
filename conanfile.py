@@ -18,7 +18,7 @@ class NiceshadeConan(ConanFile):
 
     @property
     def _source_commit(self):
-        return "c86b69a79879ead75328eb7a18c5316f3d1f9119"
+        return "9d8704d2660b0b709b398412f387f3f79ba3812d"
 
     def configure(self):
         self.settings.rm_safe("compiler.cppstd")
