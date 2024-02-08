@@ -48,14 +48,14 @@ class NiceshadeConan(ConanFile):
             settings = {
                 "Windows": {
                     "ext": ".exe",
-                    "libext": "dll"
+                    "libname": "dxcompiler.dll"
                 },
                 "Macos": {
-                    "libext": "dylib",
-                    "arch_suffix": "-armv8" if self.settings.arch == "armv8" else ""
+                    "libname": "libdxcompiler{}.dylib"
+                    .format("-armv8" if self.settings.arch == "armv8" else "")
                 },
                 "Linux": {
-                    "libext": "so"
+                    "libname": "libdxcompiler.so"
                 }
             }[os_str]
 
@@ -64,7 +64,7 @@ class NiceshadeConan(ConanFile):
 
         for pattern in [
             "niceshade{}".format(settings.get("ext", "")),
-            "*{}.{}".format(settings.get("arch_suffix", ""), settings["libext"])
+            settings["libname"]
         ]:
             files.copy(self,
                        pattern,
