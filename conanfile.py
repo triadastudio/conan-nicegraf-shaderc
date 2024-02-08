@@ -64,7 +64,7 @@ class NiceshadeConan(ConanFile):
 
         for pattern in [
             "niceshade{}".format(settings.get("ext", "")),
-            settings["libname"]
+            "*/{}".format(settings["libname"])
         ]:
             files.copy(self,
                        pattern,
