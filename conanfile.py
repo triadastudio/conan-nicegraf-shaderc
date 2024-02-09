@@ -5,7 +5,7 @@ import os
 
 class NiceshadeConan(ConanFile):
     name = "niceshade"
-    version = "1.4"
+    version = "1.4.1"
     license = "MIT"
     url = "https://github.com/triadastudio/conan-niceshade.git"
     homepage = "https://github.com/nicebyte/niceshade"
@@ -18,7 +18,7 @@ class NiceshadeConan(ConanFile):
 
     @property
     def _source_commit(self):
-        return "c86b69a79879ead75328eb7a18c5316f3d1f9119"
+        return "c996b9dc841efd68c54ee524126f1afbbae74d6c"
 
     def configure(self):
         self.settings.rm_safe("compiler.cppstd")
@@ -48,13 +48,14 @@ class NiceshadeConan(ConanFile):
             settings = {
                 "Windows": {
                     "ext": ".exe",
-                    "libext": "dll"
+                    "libname": "dxcompiler.dll"
                 },
                 "Macos": {
-                    "libext": "dylib"
+                    "libname": "libdxcompiler{}.dylib"
+                    .format("-armv8" if self.settings.arch == "armv8" else "")
                 },
                 "Linux": {
-                    "libext": "so"
+                    "libname": "libdxcompiler.so"
                 }
             }[os_str]
 
@@ -63,7 +64,7 @@ class NiceshadeConan(ConanFile):
 
         for pattern in [
             "niceshade{}".format(settings.get("ext", "")),
-            "*.{}".format(settings["libext"])
+            "*/{}".format(settings["libname"])
         ]:
             files.copy(self,
                        pattern,

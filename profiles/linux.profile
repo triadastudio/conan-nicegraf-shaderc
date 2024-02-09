@@ -5,6 +5,7 @@ compiler=clang
 compiler.version=13
 compiler.libcxx=libstdc++11
 compiler.cppstd=20
+build_type=Release
 
 [buildenv]
 CC=/usr/bin/clang-13

@@ -1,7 +1,7 @@
 [settings]
 os=Macos
-os.version=10.15
-arch=x86_64
+os.version=13.0
+arch=armv8
 compiler=apple-clang
 compiler.version=13
 compiler.libcxx=libc++
