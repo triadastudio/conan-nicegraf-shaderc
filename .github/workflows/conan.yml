@@ -80,7 +80,7 @@ jobs:
       with:
         submodules: 'recursive'
     - name: Install dependencies
-      run: pip3 install conan
+      run: pip3 install conan --break-system-packages
     - name: Config
       env:
         CONAN_PASSWORD: ${{ secrets.ARTIFACTORY_APIKEY }}
