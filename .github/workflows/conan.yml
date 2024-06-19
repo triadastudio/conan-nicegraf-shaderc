@@ -24,22 +24,22 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m venv .venv
-        . .venv/bin/activate
+        ./.venv/Scripts/activate
         python3 -m pip install conan
     - name: Config
       env:
         CONAN_PASSWORD: ${{ secrets.ARTIFACTORY_APIKEY }}
       run: |
-        . .venv/bin/activate
+        ./.venv/Scripts/activate
         conan remote add triada ${{ secrets.ARTIFACTORY_URL }}
         conan remote login triada ${{ secrets.ARTIFACTORY_USER }}
     - name: Build
       run: |
-        . .venv/bin/activate
+        ./.venv/Scripts/activate
         conan create . -pr:h profiles/windows.profile -pr:b profiles/windows.profile -s build_type=Release
     - name: Upload
       run: |
-        . .venv/bin/activate
+        ./.venv/Scripts/activate
         conan upload "niceshade" -r triada -c
 
   linux:
