@@ -88,9 +88,14 @@ jobs:
       env:
         CONAN_PASSWORD: ${{ secrets.ARTIFACTORY_APIKEY }}
       run: |
+        source venv/bin/activate
         conan remote add triada ${{ secrets.ARTIFACTORY_URL }}
         conan remote login triada ${{ secrets.ARTIFACTORY_USER }}
     - name: Build
-      run: conan create . -pr:h profiles/macos-armv8.profile -pr:b profiles/macos-armv8.profile -s build_type=Release
+      run: |
+        source venv/bin/activate
+        conan create . -pr:h profiles/macos-armv8.profile -pr:b profiles/macos-armv8.profile -s build_type=Release
     - name: Upload
-      run: conan upload "niceshade" -r triada -c      
+      run: |
+        source venv/bin/activate
+        conan upload "niceshade" -r triada -c
