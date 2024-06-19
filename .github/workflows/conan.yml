@@ -80,7 +80,10 @@ jobs:
       with:
         submodules: 'recursive'
     - name: Install dependencies
-      run: pip3 install conan --break-system-packages
+      run: |
+        python3 -m venv .venv
+        source .venv/bin/activate
+        python3 -m pip install conan
     - name: Config
       env:
         CONAN_PASSWORD: ${{ secrets.ARTIFACTORY_APIKEY }}
